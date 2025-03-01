@@ -1,65 +1,10 @@
 <script setup>
-import { ref, computed } from "vue";
-let message = ref('');
-let i = 0;
-let items = ref([
-  {id: i++, value: 'Piim', isDone: false },
-  {id: i++, value: 'Sai', isDone: true },
-  {id: i++, value: 'Viin', isDone: false },
-  {id: i++, value: 'Õlu', isDone: true },
-]);
-
-let doneItems = computed(() => items.value.filter(item => item.isDone));
-let toDoItems = computed(() => items.value.filter(item => !item.isDone));
-
-function addItem() {
-  if(message.value.trim() !== ''){
-    items.value.push({id: i++, value: message.value.trim(), isDone: false });
-  }
-  message.value = '';
-}
-
-
+import RouterTabs from './components/RouterTabs.vue';
 </script>
 
 <template>
-  <div class="container content section">
-    <div class="field has-addons">
-      <div class="control is-expanded">
-        <input class="input" type="text" v-model="message" @keydown.enter="addItem">
-      </div>
-      <div class="control">
-        <button class="button is-primary" @click="addItem">
-          Add item
-        </button>
-      </div>
+    <RouterTabs></RouterTabs>
+    <div class="container section content">
+        <RouterView></RouterView>
     </div>
-
-    <h1>All Items</h1>
-    <ul>
-      <li v-for="item in items" :key="item.id">
-        {{ item.value }}
-        <input type="checkbox" v-model="item.isDone">
-      </li>
-    </ul>
-
-    <h1>Done Items</h1>
-    <ul>
-      <li v-for="item in doneItems" :key="item.id">
-        {{ item.value }}
-        <input type="checkbox" v-model="item.isDone">
-      </li>
-    </ul>
-
-    <h1>ToDo Items</h1>
-    <ul>
-      <li v-for="item in toDoItems" :key="item.id">
-        {{ item.value }}
-        <input type="checkbox" v-model="item.isDone">
-      </li>
-    </ul>
-
-  </div>
 </template>
-
-<style scoped></style>
